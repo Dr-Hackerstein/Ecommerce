@@ -1,14 +1,25 @@
 package com.kevin.springboot.SpringEcommerce.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name="orders")
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String number;
     private Date dateCreated;
     private Date dateReceived;
-
     private double total;
+
+    @ManyToOne
+    private User user;
+
+    @OneToOne(mappedBy = "order")
+    private OrderDetails orderDetails;
 
     public Order(){
     }
@@ -59,6 +70,22 @@ public class Order {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public OrderDetails getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     @Override
