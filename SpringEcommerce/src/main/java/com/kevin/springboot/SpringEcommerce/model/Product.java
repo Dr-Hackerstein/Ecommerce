@@ -3,7 +3,7 @@ package com.kevin.springboot.SpringEcommerce.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="product")
+@Table(name="products")
 public class Product {
 
     @Id
