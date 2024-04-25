@@ -39,9 +39,9 @@
 		<div class="col-lg-3 col-md-6 mb-4" th:each="product: ${products}">
 			<div class="card h-100">
 				<img class="card-img-top"
-					 th:src="@{/images/{img} (img=${product.imagen})} " alt="">
+					 th:src="@{/images/{img} (img=${product.image})} " alt="">
 				<div class="card-body">
-					<p class="card-text" th:text="${product.nombre}"></p>
+					<p class="card-text" th:text="${product.name}"></p>
 				</div>
 				<div class="card-footer">
 					<a href="producthome.html" class="btn btn-success">Ver
