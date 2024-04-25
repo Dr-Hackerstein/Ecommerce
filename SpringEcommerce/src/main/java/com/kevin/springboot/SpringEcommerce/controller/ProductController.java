@@ -45,11 +45,13 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Integer id) {
+    public String edit(@PathVariable Integer id, Model model) {
         Optional<Product> optionalProduct = productService.get(id);
+
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
             LOGGER.info("Producto buscado: {}", product);
+            model.addAttribute("product",product);
             return "products/edit";
         } else {
             // Handle case where product with the given ID does not exist
@@ -58,5 +60,10 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/update")
+    public String update(Product product){
+        productService.update(product);
+        return "redirect:/products";
+    }
 
 }
