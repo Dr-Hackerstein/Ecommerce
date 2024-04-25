@@ -2,6 +2,7 @@ package com.kevin.springboot.SpringEcommerce.service;
 
 import com.kevin.springboot.SpringEcommerce.model.Product;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
@@ -17,4 +18,6 @@ public interface ProductService {
 
     // Method to delete a Product by its ID
     public void delete(Integer id);
+
+    public List<Product> findAll();
 }
