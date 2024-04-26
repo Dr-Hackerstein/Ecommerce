@@ -4,6 +4,7 @@ import com.kevin.springboot.SpringEcommerce.model.Order;
 import com.kevin.springboot.SpringEcommerce.model.OrderDetails;
 import com.kevin.springboot.SpringEcommerce.model.Product;
 import com.kevin.springboot.SpringEcommerce.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,5 +108,16 @@ public class HomeController {
         model.addAttribute("order", order);
 
         return "users/cart";
+    }
+
+    @GetMapping("/getCart")
+    public String getCart(Model model, HttpSession session) {
+
+        model.addAttribute("cart", details);
+        model.addAttribute("order", order);
+
+        //sesion
+        model.addAttribute("session", session.getAttribute("iduser"));
+        return "/users/cart";
     }
 }
