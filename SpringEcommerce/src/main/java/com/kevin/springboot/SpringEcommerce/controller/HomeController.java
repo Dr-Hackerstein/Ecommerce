@@ -4,6 +4,8 @@ import com.kevin.springboot.SpringEcommerce.model.Order;
 import com.kevin.springboot.SpringEcommerce.model.OrderDetails;
 import com.kevin.springboot.SpringEcommerce.model.Product;
 import com.kevin.springboot.SpringEcommerce.model.User;
+import com.kevin.springboot.SpringEcommerce.service.IOrderDetailsService;
+import com.kevin.springboot.SpringEcommerce.service.IOrderService;
 import com.kevin.springboot.SpringEcommerce.service.IUserService;
 import com.kevin.springboot.SpringEcommerce.service.ProductService;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +32,11 @@ public class HomeController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IOrderService orderService;
+
+    @Autowired
+    private IOrderDetailsService orderDetailsService;
 
     // para almacenar los detalles de la orden
     List<OrderDetails> details = new ArrayList<OrderDetails>();
@@ -138,5 +146,33 @@ public class HomeController {
 
         return "users/resumenorden";
     }
+
+
+    // guardar la orden
+    @GetMapping("/saveOrder")
+    public String saveOrder(HttpSession session ) {
+        Date createdDate = new Date();
+        order.setDateCreated(createdDate);
+        order.setNumber(orderService.generarNumeroOrden());
+
+        //user
+        User user =userService.findById(1).get();
+
+        order.setUser(user);
+        orderService.save(order);
+
+        //guardar detalles
+        for (OrderDetails dt:details) {
+            dt.setOrder(order);
+            orderDetailsService.save(dt);
+        }
+
+        ///limpiar lista y orden
+        order = new Order();
+        details.clear();
+
+        return "redirect:/";
+    }
+
 
 }
