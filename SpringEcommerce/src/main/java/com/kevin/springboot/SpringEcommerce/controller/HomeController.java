@@ -3,6 +3,8 @@ package com.kevin.springboot.SpringEcommerce.controller;
 import com.kevin.springboot.SpringEcommerce.model.Order;
 import com.kevin.springboot.SpringEcommerce.model.OrderDetails;
 import com.kevin.springboot.SpringEcommerce.model.Product;
+import com.kevin.springboot.SpringEcommerce.model.User;
+import com.kevin.springboot.SpringEcommerce.service.IUserService;
 import com.kevin.springboot.SpringEcommerce.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -23,6 +25,10 @@ public class HomeController {
     private final Logger log = LoggerFactory.getLogger(HomeController.class);
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private IUserService userService;
+
 
     // para almacenar los detalles de la orden
     List<OrderDetails> details = new ArrayList<OrderDetails>();
@@ -120,4 +126,17 @@ public class HomeController {
         model.addAttribute("session", session.getAttribute("iduser"));
         return "/users/cart";
     }
+
+    @GetMapping("/order")
+    public String order(Model model, HttpSession session) {
+
+        User user =userService.findById(1).get();
+
+        model.addAttribute("cart", details);
+        model.addAttribute("order", order);
+        model.addAttribute("user", user);
+
+        return "users/resumenorden";
+    }
+
 }
