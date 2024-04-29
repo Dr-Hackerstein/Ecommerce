@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -174,5 +175,12 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @PostMapping("/search")
+    public String searchProduct(@RequestParam String nombre, Model model) {
+        log.info("Nombre del producto: {}", nombre);
+        List<Product> products= productService.findAll().stream().filter( p -> p.getName().contains(nombre)).collect(Collectors.toList());
+        model.addAttribute("products", products);
+        return "users/home";
+    }
 
 }
