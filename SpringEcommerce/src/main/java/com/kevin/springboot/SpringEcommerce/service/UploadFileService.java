@@ -1,5 +1,4 @@
 package com.kevin.springboot.SpringEcommerce.service;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,8 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UploadFileService {
-
-    //The location of our project where our images will be stored
     private String folder="images//";
 
     public String saveImage(MultipartFile file) throws IOException {
